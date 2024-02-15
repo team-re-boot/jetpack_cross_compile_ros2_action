@@ -1,0 +1,26 @@
+name: Build test
+
+on:
+  schedule:
+    - cron: 0 0 * * *
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-22.04
+    timeout-minutes: 180
+    strategy:
+      fail-fast: false
+      max-parallel: 8
+      matrix:
+        rosdistro: [humble]
+    env:
+      ROS_DISTRO: ${{ matrix.rosdistro }}
+    steps:
+      - uses: actions/checkout@v3
+      - name: compile ros2 for jetson
+        uses: ./
+        with:
+          repos: $(cat ros2_humble.repos)

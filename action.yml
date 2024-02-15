@@ -1,0 +1,12 @@
+# action.yml
+name: 'cross compile ros2 package for jetson'
+description: 'GitHub actions for cross compile ros2 package for jetson.'
+inputs:
+  repos:
+    description: 'text input for repos file'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.repos }}
